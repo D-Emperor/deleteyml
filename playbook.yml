@@ -1,0 +1,45 @@
+---
+- name: Install and configure 
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Install MySQL
+      apt:
+        name: mysql-server
+        state: present
+
+    - name: Start MySQL service
+      service:
+        name: mysql
+        state: started
+ 
+    - name: Install Tomcat
+      apt:
+        name: tomcat9
+        state: present
+ 
+    - name: Install Memcached
+      apt:
+        name: memcached
+        state: present
+ 
+    - name: Start Memcached service
+      service:
+        name: memcached
+        state: started
+ 
+    - name: Install Redis
+      apt:
+        name: redis-server
+        state: present
+ 
+    - name: Start Redis service
+      service:
+        name: redis-server
+        state: started
+# Copying the "app.war" file to tomcat "webapps" folder 
+    - name: Deploy sample war file
+      copy:
+        src: /opt/app.war
+        dest: /var
